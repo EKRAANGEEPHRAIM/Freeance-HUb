@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  db:
+    image: neondatabase/neon_local:latest
+    container_name: freelancehub_db
+    ports:
+      - "5432:5432"
+    environment:
+      NEON_API_KEY: ${NEON_API_KEY}
+      NEON_PROJECT_ID: ${NEON_PROJECT_ID}
+      # Optionnel : force le driver standard compatible avec Prisma
+      DRIVER: postgres 
+    volumes:
+      # Permet de synchroniser vos branches de DB avec vos branches Git
+      - ./.git:/workspace/.git 

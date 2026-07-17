@@ -1,0 +1,105 @@
+datasource db {
+  provider = "postgresql"
+ 
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. Le Freelance (Utilisateur principal)
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  clients   Client[]
+  notes     Note[]
+}
+
+// 2. Les Clients du Freelance
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Clé étrangère vers l'utilisateur
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  projects  Project[]
+}
+
+// 3. Les Projets des Clients
+model Project {
+  id          String        @id @default(uuid())
+  title       String
+  description String?
+  status      ProjectStatus @default(PENDING)
+  startDate   DateTime      @default(now())
+  endDate     DateTime?
+  budget      Float
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Clé étrangère vers le client
+  clientId    String
+  client      Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  // Relations
+  invoices    Invoice[]
+}
+
+// 4. Les Factures des Projets
+model Invoice {
+  id          String        @id @default(uuid())
+  number      String        @unique // Ex: INV-2026-001
+  amount      Float
+  dueDate     DateTime
+  status      InvoiceStatus @default(DRAFT)
+  pdfUrl      String?       // Stockage du lien Cloud/Local du PDF généré
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Clé étrangère vers le projet
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// 5. Notes rapides du Freelance
+model Note {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Clé étrangère vers l'utilisateur
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Énumérations (Enums) pour sécuriser les statuts
+enum ProjectStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+}
