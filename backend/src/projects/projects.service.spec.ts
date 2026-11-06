@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { ProjectStatus } from '@prisma/client';
+import { Currency, ProjectStatus } from '@prisma/client';
 import type { Project } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
 import { ProjectsService } from './projects.service';
@@ -16,6 +16,7 @@ const project: Project = {
   startDate: new Date('2026-01-01'),
   endDate: null,
   budget: 2500,
+  currency: Currency.EUR,
   createdAt: new Date('2026-01-01'),
   updatedAt: new Date('2026-01-01'),
 };

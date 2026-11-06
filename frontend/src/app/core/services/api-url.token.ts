@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 export const API_URL = new InjectionToken<string>('API_URL', {
-  factory: () => 'http://localhost:3000/api',
+  factory: () => environment.apiUrl,
 });

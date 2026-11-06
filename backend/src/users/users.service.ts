@@ -31,7 +31,6 @@ export class UsersService {
       });
     } catch (error: unknown) {
       if (
-
         // PrismaClientKnownRequestError is a class that represents a known request error
         error instanceof Prisma.PrismaClientKnownRequestError &&
         error.code === 'P2002'

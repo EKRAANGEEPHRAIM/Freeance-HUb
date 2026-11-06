@@ -43,12 +43,12 @@ describe('ClientsService', () => {
     requests[0].flush([client]);
     requests[1].flush(client);
 
-    const updateRequest = httpController.expectOne(`http://api.test/api/clients/${client.id}`);
-    expect(updateRequest.request.method).toBe('PATCH');
+    // PATCH et DELETE visent la même URL : on les distingue par la méthode
+    const clientUrl = `http://api.test/api/clients/${client.id}`;
+    const updateRequest = httpController.expectOne({ url: clientUrl, method: 'PATCH' });
     updateRequest.flush({ ...client, name: 'Renamed Corp' });
 
-    const deleteRequest = httpController.expectOne(`http://api.test/api/clients/${client.id}`);
-    expect(deleteRequest.request.method).toBe('DELETE');
+    const deleteRequest = httpController.expectOne({ url: clientUrl, method: 'DELETE' });
     deleteRequest.flush(client);
   });
 });

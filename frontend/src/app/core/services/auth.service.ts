@@ -30,6 +30,18 @@ export class AuthService {
       .pipe(tap((response) => this.setSession(response)));
   }
 
+  refreshToken() {
+    const refreshToken = this.tokenStorage.getRefreshToken();
+
+    if (!refreshToken) {
+      throw new Error('Aucun refresh token disponible');
+    }
+
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/auth/refresh`, { refreshToken })
+      .pipe(tap((response) => this.setSession(response)));
+  }
+
   logout(): void {
     this.tokenStorage.clear();
     this.user.set(null);

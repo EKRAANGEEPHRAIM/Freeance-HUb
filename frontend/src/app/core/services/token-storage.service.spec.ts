@@ -2,6 +2,7 @@ import { TokenStorageService } from './token-storage.service';
 
 const auth = {
   accessToken: 'access-token',
+  refreshToken: 'refresh-token',
   user: {
     id: '6502f79b-4c80-4f6b-9658-b14a35c45575',
     email: 'ada@example.com',
@@ -21,6 +22,7 @@ describe('TokenStorageService', () => {
     service.save(auth);
 
     expect(service.getToken()).toBe(auth.accessToken);
+    expect(service.getRefreshToken()).toBe(auth.refreshToken);
     expect(service.getUser()).toEqual(auth.user);
   });
 
@@ -36,6 +38,7 @@ describe('TokenStorageService', () => {
     service.clear();
 
     expect(service.getToken()).toBeNull();
+    expect(service.getRefreshToken()).toBeNull();
     expect(service.getUser()).toBeNull();
   });
 });

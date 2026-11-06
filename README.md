@@ -1,10 +1,10 @@
 <div align="center">
-  <h1>🚀 FreelanceHub</h1>
-  <p><strong>Application complète de gestion pour freelance</strong></p>
-  <p>Gérez vos clients, projets, factures et notes en toute simplicité.</p>
+  <h1>FreelanceHub</h1>
+  <p><strong>Clients, projets et factures pour les freelances d'Afrique francophone</strong></p>
+  <p>Factures en FCFA ou en euros, envoyées par WhatsApp, payées par Orange Money, MTN MoMo ou Wave.</p>
 
   <p>
-    <img src="https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular&logoColor=white" alt="Angular">
+    <img src="https://img.shields.io/badge/Angular-22.2-DD0031?logo=angular&logoColor=white" alt="Angular">
     <img src="https://img.shields.io/badge/NestJS-11.0-EA2845?logo=nestjs&logoColor=white" alt="NestJS">
     <img src="https://img.shields.io/badge/Prisma-7.8-2D3748?logo=prisma&logoColor=white" alt="Prisma">
     <img src="https://img.shields.io/badge/PostgreSQL-Neon-316192?logo=postgresql&logoColor=white" alt="PostgreSQL">
@@ -32,14 +32,36 @@
 
 ## 📖 Présentation
 
-**FreelanceHub** est une application full-stack conçue pour les freelances souhaitant centraliser la gestion de leur activité. Elle offre une interface moderne et responsive pour gérer :
+**Pour qui :** développeurs, designers, consultants et petites agences d'Abidjan, Dakar, Douala…
+qui facturent à la fois des clients locaux en FCFA et des clients européens en euros.
 
-- 👥 **Clients** — Répertoire complet de vos clients
-- 📁 **Projets** — Suivi de l'avancement de vos projets
-- 📄 **Factures** — Génération et gestion des factures
-- 📝 **Notes** — Prise de notes rapide et organisée
+Les outils de facturation européens ignorent le franc CFA, le Mobile Money et WhatsApp, qui sont
+pourtant le quotidien des freelances d'Afrique de l'Ouest. FreelanceHub part de cette réalité :
 
-Le backend repose sur **NestJS** avec **Prisma** pour l'accès aux données, tandis que le frontend utilise **Angular 21** avec **NgRx Signals** pour la gestion d'état et **Tailwind CSS 4** pour le design.
+- **FCFA et euros** — chaque projet a sa devise ; les totaux sont convertis au taux fixe 1 € = 655,957 FCFA
+- **Facture prête à envoyer** — imprimable en PDF, envoyée par WhatsApp ou e-mail en un clic
+- **Mobile Money** — Orange Money, MTN MoMo, Wave, Moov Money et virement affichés sur la facture
+- **Relances sans gêne** — les retards remontent en premier, avec un message de relance déjà rédigé
+- **Tableau de bord** — encaissé, reste à encaisser et graphique des 6 derniers mois
+
+Le backend repose sur **NestJS** avec **Prisma**, le frontend sur **Angular 22** (signals,
+NgRx Signals) et **Tailwind CSS 4**.
+
+---
+
+## 🎯 Essayer la démo
+
+**Application :** _lien à ajouter après déploiement_
+
+Sur la page d'accueil, cliquez sur **« Essayer la démo »** : vous arrivez dans un espace déjà
+rempli (3 clients, 5 projets en FCFA et en euros, 7 factures dont une en retard, 3 notes).
+Ouvrez une facture pour tester l'impression en PDF, l'envoi par WhatsApp et la relance.
+
+| E-mail | Mot de passe |
+| --- | --- |
+| `demo@freelancehub.app` | `Demo2026!` |
+
+> L'API est hébergée sur un plan gratuit : le premier chargement peut prendre environ 30 secondes.
 
 ---
 
@@ -48,7 +70,8 @@ Le backend repose sur **NestJS** avec **Prisma** pour l'accès aux données, tan
 ### 🔐 Authentification
 - Inscription et connexion sécurisées (JWT)
 - Protection des routes par guards Angular
-- Gestion des tokens avec refresh automatique
+- Jeton d'accès de 15 min renouvelé automatiquement (refresh token de 7 jours)
+- Limitation des tentatives de connexion et d'inscription (anti force brute)
 
 ### 👥 Gestion des clients
 - CRUD complet des clients
@@ -83,8 +106,8 @@ Le backend repose sur **NestJS** avec **Prisma** pour l'accès aux données, tan
 ### Frontend
 | Technologie | Version | Rôle |
 |---|---|---|
-| [Angular](https://angular.dev) | 21.2 | Framework frontend |
-| [NgRx Signals](https://ngrx.io/guide/signals) | 21.1 | Gestion d'état réactive |
+| [Angular](https://angular.dev) | 22.2 | Framework frontend |
+| [NgRx Signals](https://ngrx.io/guide/signals) | 22.0 | Gestion d'état réactive |
 | [Tailwind CSS](https://tailwindcss.com) | 4.1 | Design system utilitaires |
 | [TypeScript](https://www.typescriptlang.org) | 5.9 | Langage |
 | [Vitest](https://vitest.dev) | 4.0 | Tests unitaires |
@@ -235,6 +258,9 @@ docker compose up -d
 # Appliquer les migrations Prisma
 npx prisma migrate dev
 
+# Créer le compte de démo et ses données (optionnel)
+npm run seed
+
 # Démarrer le serveur en mode développement
 npm run start:dev
 ```
@@ -271,12 +297,21 @@ DATABASE_URL="postgresql://user:password@host:5432/freelancehub"
 # URL du frontend (CORS)
 FRONTEND_URL="http://localhost:4200"
 
-# Clé secrète pour les tokens JWT
+# Clé secrète pour les tokens JWT (au moins 32 caractères)
 JWT_SECRET="votre_clé_secrète_très_longue"
-
-# Durée de validité du token JWT
-JWT_EXPIRES_IN="7d"
 ```
+
+Un modèle complet est fourni dans [`backend/.env.example`](backend/.env.example).
+
+---
+
+## ☁️ Déploiement
+
+- **API (Render)** : [`render.yaml`](render.yaml) décrit le service. Renseigner `DATABASE_URL`
+  et `FRONTEND_URL` dans le tableau de bord Render ; `JWT_SECRET` est généré automatiquement.
+  Lancer ensuite `npm run seed` une fois pour créer le compte de démo.
+- **Frontend (Vercel)** : dossier racine `frontend`. [`frontend/vercel.json`](frontend/vercel.json)
+  redirige `/api/*` vers l'API Render, le site et l'API partagent donc le même domaine.
 
 ---
 
@@ -317,6 +352,7 @@ L'API est préfixée par `/api`. Exemples d'endpoints :
 |---|---|---|
 | `POST` | `/api/auth/register` | Inscription |
 | `POST` | `/api/auth/login` | Connexion |
+| `POST` | `/api/auth/refresh` | Renouvellement du jeton d'accès |
 | `GET` | `/api/clients` | Liste des clients |
 | `POST` | `/api/clients` | Créer un client |
 | `GET` | `/api/projects` | Liste des projets |
@@ -330,7 +366,7 @@ L'API est préfixée par `/api`. Exemples d'endpoints :
 
 ## 📄 Licence
 
-Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus d'informations.
+Ce projet est sous licence **MIT**.
 
 ---
 

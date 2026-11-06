@@ -1,6 +1,5 @@
 datasource db {
   provider = "postgresql"
- 
 }
 
 generator client {
@@ -49,6 +48,8 @@ model Project {
   startDate   DateTime      @default(now())
   endDate     DateTime?
   budget      Float
+  // Devise du projet et de ses factures : XOF (franc CFA) ou EUR
+  currency    Currency      @default(XOF)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
@@ -97,9 +98,15 @@ enum ProjectStatus {
   CANCELLED
 }
 
+enum Currency {
+  XOF
+  EUR
+}
+
 enum InvoiceStatus {
   DRAFT
   SENT
   PAID
   OVERDUE
 }
+

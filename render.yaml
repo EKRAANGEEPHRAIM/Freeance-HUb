@@ -1,0 +1,20 @@
+# API NestJS sur Render (plan gratuit). Les valeurs "sync: false" se saisissent
+# dans le tableau de bord Render, jamais dans ce fichier.
+services:
+  - type: web
+    name: freelancehub-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci --include=dev && npx prisma generate && npx prisma migrate deploy && npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

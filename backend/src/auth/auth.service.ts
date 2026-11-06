@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import type { LoginDto, RegisterDto } from './dto/auth.dto';
+import type { LoginDto, RefreshDto, RegisterDto } from './dto/auth.dto';
 import type { AuthResponse, JwtPayload } from './auth.types';
 import { UsersService } from '../users/users.service';
 import type { AuthenticatedUser } from '../users/users.types';
@@ -24,13 +24,40 @@ export class AuthService {
     const user = await this.usersService.findByEmail(data.email);
 
     if (!user || !(await bcrypt.compare(data.password, user.password))) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('Email ou mot de passe invalide');
     }
 
     const authenticatedUser = await this.usersService.findById(user.id);
 
     if (!authenticatedUser) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException('Utilisateur introuvable');
+    }
+
+    return this.createAuthResponse(authenticatedUser);
+  }
+
+  async refreshToken(data: RefreshDto): Promise<AuthResponse> {
+    let payload: JwtPayload;
+
+    try {
+      payload = await this.jwtService.verifyAsync<JwtPayload>(
+        data.refreshToken,
+      );
+    } catch {
+      throw new UnauthorizedException(
+        'Token de rafraîchissement invalide ou expiré',
+      );
+    }
+
+    // Le refresh token doit contenir le type "refresh"
+    if (payload.type !== 'refresh') {
+      throw new UnauthorizedException('Token de rafraîchissement invalide');
+    }
+
+    const authenticatedUser = await this.usersService.findById(payload.sub);
+
+    if (!authenticatedUser) {
+      throw new UnauthorizedException('Utilisateur introuvable');
     }
 
     return this.createAuthResponse(authenticatedUser);
@@ -39,9 +66,22 @@ export class AuthService {
   private async createAuthResponse(
     user: AuthenticatedUser,
   ): Promise<AuthResponse> {
-    const payload: JwtPayload = { sub: user.id, email: user.email };
-    const accessToken = await this.jwtService.signAsync(payload);
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      type: 'access',
+    };
+    const refreshPayload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      type: 'refresh',
+    };
 
-    return { accessToken, user };
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload, { expiresIn: '15m' }),
+      this.jwtService.signAsync(refreshPayload, { expiresIn: '7d' }),
+    ]);
+
+    return { accessToken, refreshToken, user };
   }
 }

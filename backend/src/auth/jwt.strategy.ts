@@ -19,10 +19,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
+    // Seuls les tokens de type "access" peuvent être utilisés comme Bearer token
+    if (payload.type !== 'access') {
+      throw new UnauthorizedException('Token invalide');
+    }
+
     const user = await this.usersService.findById(payload.sub);
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException('Utilisateur introuvable');
     }
 
     return user;

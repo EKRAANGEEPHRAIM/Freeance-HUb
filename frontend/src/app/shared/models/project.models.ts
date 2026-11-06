@@ -1,3 +1,5 @@
+import type { Currency } from '../utils/money';
+
 export type ProjectStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
 
 export type Project = {
@@ -9,6 +11,8 @@ export type Project = {
   startDate: string | null;
   endDate: string | null;
   budget: number;
+  /** Devise du budget et des factures du projet */
+  currency: Currency;
   createdAt: string;
   updatedAt: string;
 };
@@ -21,6 +25,7 @@ export type CreateProjectPayload = {
   startDate?: string;
   endDate?: string | null;
   budget: number;
+  currency: Currency;
 };
 
 export type UpdateProjectPayload = Omit<CreateProjectPayload, 'clientId'>;

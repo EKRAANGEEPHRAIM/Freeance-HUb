@@ -1,3 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+/*
+ * Identité FreelanceHub : vert forêt (confiance, argent) + orange (énergie, Afrique de l'Ouest).
+ * Les composants utilisent les classes indigo-* et violet-* de Tailwind : on redéfinit ces
+ * deux palettes ici, ce qui rhabille toute l'application sans toucher aux templates.
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji';
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* indigo-* → vert forêt */
+  --color-indigo-50: #effaf4;
+  --color-indigo-100: #d8f3e3;
+  --color-indigo-200: #b3e6ca;
+  --color-indigo-300: #7fd2aa;
+  --color-indigo-400: #47b684;
+  --color-indigo-500: #239a69;
+  --color-indigo-600: #157c54;
+  --color-indigo-700: #116345;
+  --color-indigo-800: #104f39;
+  --color-indigo-900: #0e4130;
+  --color-indigo-950: #06251b;
+
+  /* violet-* → orange */
+  --color-violet-50: #fff7ed;
+  --color-violet-100: #ffedd5;
+  --color-violet-200: #fed7aa;
+  --color-violet-300: #fdba74;
+  --color-violet-400: #fb923c;
+  --color-violet-500: #f97316;
+  --color-violet-600: #ea580c;
+  --color-violet-700: #c2410c;
+  --color-violet-800: #9a3412;
+  --color-violet-900: #7c2d12;
+  --color-violet-950: #431407;
+}
+
+/* Titres en Plus Jakarta Sans */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+/* Facture : seule la feuille est imprimée (navigation, en-tête et boutons masqués) */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+}
+
+/* --- Style commun des champs de formulaire --- */
+.field-input,
+.field-select,
+.field-textarea {
+  @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100;
+}
+
+.field-select {
+  @apply cursor-pointer;
+}
+
+.field-textarea {
+  @apply min-h-24 resize-y leading-6;
+}
+
+/* Retire les flèches des inputs number pour un rendu plus net */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

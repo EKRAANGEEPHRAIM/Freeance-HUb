@@ -1,5 +1,7 @@
-import { ProjectStatus } from '@prisma/client';
+import { Currency, ProjectStatus } from '@prisma/client';
 import { z } from 'zod';
+
+const currencies = [Currency.XOF, Currency.EUR] as const;
 
 const projectStatuses = [
   ProjectStatus.PENDING,
@@ -17,6 +19,7 @@ const projectFields = {
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional().nullable(),
   budget: z.coerce.number().positive(),
+  currency: z.enum(currencies).optional(),
 };
 
 export const createProjectSchema = z
@@ -38,6 +41,7 @@ export const updateProjectSchema = z
     startDate: z.coerce.date().optional(),
     endDate: z.coerce.date().optional().nullable(),
     budget: z.coerce.number().positive().optional(),
+    currency: z.enum(currencies).optional(),
   })
   .refine((data) => Object.values(data).some((value) => value !== undefined), {
     message: 'At least one field must be provided',

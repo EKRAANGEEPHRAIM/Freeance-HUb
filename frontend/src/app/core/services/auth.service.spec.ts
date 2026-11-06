@@ -7,6 +7,7 @@ import { TokenStorageService } from './token-storage.service';
 
 const authResponse = {
   accessToken: 'access-token',
+  refreshToken: 'refresh-token',
   user: {
     id: '6502f79b-4c80-4f6b-9658-b14a35c45575',
     email: 'ada@example.com',
