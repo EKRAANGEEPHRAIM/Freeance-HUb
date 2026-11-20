@@ -1,5 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { Invoice, Prisma } from '@prisma/client';
+import { Invoice } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
 import type { CreateInvoiceDto, UpdateInvoiceDto } from './dto/invoice.dto';
 
@@ -9,12 +9,9 @@ export class InvoicesService {
 
   async create(userId: string, data: CreateInvoiceDto): Promise<Invoice> {
     await this.ensureProjectOwnership(data.projectId, userId);
+    await this.ensureNumberAvailable(userId, data.number);
 
-    try {
-      return await this.database.invoice.create({ data });
-    } catch (error: unknown) {
-      this.handleDuplicateNumber(error);
-    }
+    return this.database.invoice.create({ data });
   }
 
   findAll(userId: string): Promise<Invoice[]> {
@@ -42,15 +39,14 @@ export class InvoicesService {
     data: UpdateInvoiceDto,
   ): Promise<Invoice> {
     await this.findOne(id, userId);
-
-    try {
-      return await this.database.invoice.update({
-        where: { id },
-        data,
-      });
-    } catch (error: unknown) {
-      this.handleDuplicateNumber(error);
+    if (data.number !== undefined) {
+      await this.ensureNumberAvailable(userId, data.number, id);
     }
+
+    return this.database.invoice.update({
+      where: { id },
+      data,
+    });
   }
 
   async remove(id: string, userId: string): Promise<Invoice> {
@@ -73,14 +69,23 @@ export class InvoicesService {
     }
   }
 
-  private handleDuplicateNumber(error: unknown): never {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === 'P2002'
-    ) {
-      throw new ConflictException('An invoice already exists for this number');
-    }
+  /** Un numéro de facture est unique parmi les factures d'une même freelance, pas dans toute l'application */
+  private async ensureNumberAvailable(
+    userId: string,
+    number: string,
+    excludeId?: string,
+  ): Promise<void> {
+    const duplicate = await this.database.invoice.findFirst({
+      where: {
+        number,
+        project: { client: { userId } },
+        ...(excludeId ? { NOT: { id: excludeId } } : {}),
+      },
+      select: { id: true },
+    });
 
-    throw error;
+    if (duplicate) {
+      throw new ConflictException('Vous avez déjà une facture avec ce numéro');
+    }
   }
 }

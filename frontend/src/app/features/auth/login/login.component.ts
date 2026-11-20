@@ -3,34 +3,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { BrandComponent } from '../../../shared/ui/brand/brand.component';
+import { InvoiceSheetComponent } from '../../../shared/ui/invoice-sheet/invoice-sheet.component';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BrandComponent, InvoiceSheetComponent],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <main class="grid min-h-dvh lg:grid-cols-2">
       <section class="flex items-center justify-center bg-slate-50 px-5 py-12 sm:px-8">
         <div class="w-full max-w-md">
-          <a routerLink="/" class="mb-12 inline-flex items-center gap-3">
-            <span
-              class="relative grid size-10 place-items-center rounded-xl bg-indigo-700 font-display text-lg font-extrabold text-white"
-              >F<span
-                class="absolute -right-0.5 -top-0.5 size-3 rounded-full bg-violet-500 ring-2 ring-slate-50"
-              ></span
-            ></span>
-            <span class="font-display text-xl font-extrabold tracking-tight text-slate-950"
-              >FreelanceHub</span
-            >
-          </a>
+          <a routerLink="/" class="mb-14 inline-block" aria-label="Réglo, accueil"><app-brand [size]="28" /></a>
 
           <div>
-            <p class="text-sm font-semibold text-indigo-600">Content de te revoir</p>
-            <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-              Connecte-toi à ton espace
+            <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Connexion</p>
+            <h1 class="mt-4 text-4xl font-medium text-slate-950">
+              Bon retour dans votre registre.
             </h1>
             <p class="mt-3 text-sm leading-6 text-slate-500">
-              Retrouve tes clients, projets et factures en quelques secondes.
+              Vos clients, projets et factures vous attendent.
             </p>
           </div>
 
@@ -58,7 +50,7 @@ import { AuthService } from '../../../core/services/auth.service';
               />
               @if (showError('email')) {
                 <span class="mt-1.5 block text-xs font-medium text-rose-600"
-                  >Saisis une adresse e-mail valide.</span
+                  >Saisissez une adresse e-mail valide.</span
                 >
               }
             </label>
@@ -129,7 +121,7 @@ import { AuthService } from '../../../core/services/auth.service';
             </label>
 
             <button
-              class="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+              class="flex w-full items-center justify-center rounded-md bg-indigo-800 px-4 py-3.5 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:cursor-not-allowed disabled:opacity-60"
               type="submit"
               [disabled]="isSubmitting()"
             >
@@ -142,15 +134,15 @@ import { AuthService } from '../../../core/services/auth.service';
           </form>
 
           <div
-            class="mt-6 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-900"
+            class="mt-8 border-t border-slate-300 pt-6 text-sm text-slate-700"
           >
-            <p class="font-semibold">Vous visitez la démo ?</p>
-            <p class="mt-1 text-indigo-800">
+            <p class="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">Vous visitez la démo ?</p>
+            <p class="mt-2 text-slate-600">
               Un compte rempli de clients, projets et factures fictifs vous attend.
             </p>
             <button
               type="button"
-              class="mt-2 font-semibold text-indigo-600 underline-offset-2 hover:underline"
+              class="mt-3 font-medium text-slate-950 underline decoration-slate-400 underline-offset-[6px] hover:decoration-slate-950"
               (click)="fillDemo()"
             >
               Utiliser le compte de démonstration
@@ -161,41 +153,21 @@ import { AuthService } from '../../../core/services/auth.service';
             Pas encore de compte ?
             <a
               routerLink="/auth/register"
-              class="font-semibold text-indigo-600 hover:text-indigo-700"
+              class="font-medium text-slate-950 underline decoration-slate-400 underline-offset-4 hover:decoration-slate-950"
               >Créer un compte</a
             >
           </p>
         </div>
       </section>
 
-      <section
-        class="relative hidden overflow-hidden bg-slate-950 p-12 lg:flex lg:flex-col lg:justify-between"
-      >
-        <div
-          class="absolute -right-20 -top-20 size-96 rounded-full bg-indigo-600/30 blur-3xl"
-        ></div>
-        <div
-          class="absolute -bottom-28 left-10 size-80 rounded-full bg-violet-600/20 blur-3xl"
-        ></div>
-        <div class="relative max-w-md">
-          <span
-            class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-indigo-200"
-            >L'outil des indépendants organisés</span
-          >
-          <h2 class="mt-7 text-5xl font-bold tracking-tight text-white">
-            Garde le contrôle sur ton activité.
-          </h2>
-          <p class="mt-6 text-lg leading-8 text-slate-300">
-            Centralise les relations clients, les projets et tes factures dans un espace clair.
+      <section class="relative hidden border-l border-slate-300/70 bg-slate-100/70 px-12 py-14 lg:flex lg:flex-col lg:justify-center">
+        <div class="mx-auto w-full max-w-md">
+          <app-invoice-sheet />
+          <p class="mt-14 font-display text-2xl leading-snug text-slate-900">
+            « Une facture claire, c'est déjà <em class="text-violet-600">la moitié du paiement</em>. »
           </p>
+          <p class="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-slate-500">Exemple · facture réglée par Wave</p>
         </div>
-        <ul
-          class="relative space-y-3 rounded-2xl border border-white/10 bg-white/10 p-6 text-sm leading-6 text-slate-200 backdrop-blur"
-        >
-          <li>Clients, projets et factures reliés entre eux</li>
-          <li>Factures en retard repérées au premier coup d'œil</li>
-          <li>Notes rapides pour ne rien oublier entre deux rendez-vous</li>
-        </ul>
       </section>
     </main>
   `,
@@ -222,7 +194,7 @@ export class LoginComponent implements OnInit {
 
   /** Compte public créé par le seed du backend (prisma/seed.ts) */
   protected fillDemo(): void {
-    this.form.setValue({ email: 'demo@freelancehub.app', password: 'Demo2026!' });
+    this.form.setValue({ email: 'demo@reglo.app', password: 'Demo2026!' });
     this.submit();
   }
 
@@ -255,6 +227,6 @@ export class LoginComponent implements OnInit {
   private getErrorMessage(error: HttpErrorResponse): string {
     return typeof error.error?.message === 'string'
       ? error.error.message
-      : 'La connexion a échoué. Vérifie tes identifiants.';
+      : 'La connexion a échoué. Vérifiez vos identifiants.';
   }
 }

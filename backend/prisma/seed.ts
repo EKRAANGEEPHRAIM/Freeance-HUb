@@ -6,7 +6,7 @@ import { Currency, InvoiceStatus, PrismaClient, ProjectStatus } from '@prisma/cl
 
 // Compte de démonstration public (affiché sur la page de connexion et dans le README).
 // Relancer le seed remet les données de démo à zéro, sans toucher aux autres comptes.
-const DEMO_EMAIL = 'demo@freelancehub.app';
+const DEMO_EMAIL = 'demo@reglo.app';
 const DEMO_PASSWORD = 'Demo2026!';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });

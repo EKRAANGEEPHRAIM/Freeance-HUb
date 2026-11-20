@@ -35,7 +35,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('FreelanceHub API')
+    .setTitle('Réglo API')
     .setDescription('Freelance management API')
     .setVersion('1.0')
     .addBearerAuth()
@@ -45,7 +45,7 @@ async function bootstrap() {
 
   const port = configService.getOrThrow<number>('PORT');
   await app.listen(port);
-  logger.log(`🚀 FreelanceHub API démarrée sur http://localhost:${port}/api`);
+  logger.log(`🚀 Réglo API démarrée sur http://localhost:${port}/api`);
   logger.log(`📚 Documentation Swagger sur http://localhost:${port}/api/docs`);
 }
 

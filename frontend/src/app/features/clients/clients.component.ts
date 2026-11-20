@@ -20,13 +20,13 @@ import { ClientsService } from './services/clients.service';
     <section class="space-y-7">
       <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p class="text-sm font-semibold text-indigo-600">Relations</p>
-          <h2 class="mt-1 text-3xl font-bold tracking-tight text-slate-950">Clients</h2>
-          <p class="mt-2 text-slate-500">Gère tous tes contacts au même endroit.</p>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Relations</p>
+          <h2 class="mt-3 text-4xl font-medium text-slate-950">Clients</h2>
+          <p class="mt-2 text-slate-500">Tous vos clients et leurs coordonnées au même endroit.</p>
         </div>
         <button
           type="button"
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-indigo-900"
           (click)="openCreate()"
         >
           <svg
@@ -178,13 +178,13 @@ import { ClientsService } from './services/clients.service';
                 {{
                   query()
                     ? 'Essaie une autre recherche.'
-                    : 'Ajoute ton premier client pour commencer à organiser ton activité.'
+                    : 'Ajoutez votre premier client pour commencer.'
                 }}
               </p>
               @if (!query()) {
                 <button
                   type="button"
-                  class="mt-5 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white"
+                  class="mt-5 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white"
                   (click)="openCreate()"
                 >
                   Ajouter un client
@@ -207,7 +207,7 @@ import { ClientsService } from './services/clients.service';
         <div class="relative w-full max-w-xl rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <p class="text-sm font-semibold text-indigo-600">
+              <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">
                 {{ selectedClient() ? 'Modifier le contact' : 'Nouveau contact' }}
               </p>
               <h3 class="mt-1 text-2xl font-bold text-slate-950">
@@ -324,7 +324,7 @@ export class ClientsComponent implements OnInit {
       },
       error: () => {
         this.errorMessage.set(
-          'Impossible de charger tes clients. Vérifie ta connexion puis réessaie.',
+          'Impossible de charger vos clients. Vérifiez votre connexion, puis réessayez.',
         );
         this.loading.set(false);
       },

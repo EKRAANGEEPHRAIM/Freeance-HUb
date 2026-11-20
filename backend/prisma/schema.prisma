@@ -64,7 +64,9 @@ model Project {
 // 4. Les Factures des Projets
 model Invoice {
   id          String        @id @default(uuid())
-  number      String        @unique // Ex: INV-2026-001
+  // Unique par freelance (vérifié dans InvoicesService), pas dans toute l'application :
+  // deux freelances doivent pouvoir avoir chacun leur FAC-2026-001
+  number      String
   amount      Float
   dueDate     DateTime
   status      InvoiceStatus @default(DRAFT)
@@ -75,6 +77,8 @@ model Invoice {
   // Clé étrangère vers le projet
   projectId   String
   project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([number])
 }
 
 // 5. Notes rapides du Freelance

@@ -7,7 +7,7 @@ import { AuthService } from '../../core/services/auth.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <header
-      class="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-5 sm:px-8"
+      class="flex h-16 items-center justify-between border-b border-slate-300/70 bg-slate-50 px-5 sm:px-8"
     >
       <div class="flex items-center gap-3">
         <button
@@ -27,8 +27,7 @@ import { AuthService } from '../../core/services/auth.service';
           </svg>
         </button>
         <div>
-          <p class="text-xs font-medium text-slate-500">Bienvenue</p>
-          <h1 class="text-lg font-bold text-slate-950">{{ userName }}</h1>
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">{{ today }}</p>
         </div>
       </div>
 
@@ -39,7 +38,7 @@ import { AuthService } from '../../core/services/auth.service';
           (click)="logout()"
         >
           <span
-            class="grid size-9 place-items-center rounded-lg bg-indigo-100 text-sm font-bold text-indigo-700"
+            class="grid size-9 place-items-center rounded-full border border-slate-300 bg-white font-display text-sm font-semibold text-slate-800"
             >{{ initials }}</span
           >
           <span class="hidden text-left sm:block">
@@ -56,6 +55,9 @@ export class HeaderComponent {
 
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  /** Date du jour, en tête de registre */
+  protected readonly today = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
 
   get userName(): string {
     const user = this.authService.user();

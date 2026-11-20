@@ -2,7 +2,7 @@
 # dans le tableau de bord Render, jamais dans ce fichier.
 services:
   - type: web
-    name: freelancehub-api
+    name: reglo-api
     runtime: node
     plan: free
     rootDir: backend

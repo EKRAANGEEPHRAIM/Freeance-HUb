@@ -23,7 +23,7 @@ import type { Client, ClientPayload } from '../../../shared/models/client.models
             [class.border-rose-400]="hasError('name')"
             [class.border-slate-200]="!hasError('name')"
             formControlName="name"
-            placeholder="Sofia Martin"
+            placeholder="Aya Kouassi"
           />
           @if (hasError('name')) {
             <span class="mt-1 block text-xs text-rose-600">Le nom est requis.</span>
@@ -34,7 +34,7 @@ import type { Client, ClientPayload } from '../../../shared/models/client.models
           ><input
             class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
             formControlName="company"
-            placeholder="Studio Martin"
+            placeholder="Boutique Adjoua"
         /></label>
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
@@ -46,10 +46,10 @@ import type { Client, ClientPayload } from '../../../shared/models/client.models
             [class.border-slate-200]="!hasError('email')"
             type="email"
             formControlName="email"
-            placeholder="sofia@exemple.com"
+            placeholder="aya@exemple.ci"
           />
           @if (hasError('email')) {
-            <span class="mt-1 block text-xs text-rose-600">Saisis une adresse e-mail valide.</span>
+            <span class="mt-1 block text-xs text-rose-600">Saisissez une adresse e-mail valide.</span>
           }
         </label>
         <label class="block"
@@ -58,7 +58,7 @@ import type { Client, ClientPayload } from '../../../shared/models/client.models
             class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
             type="tel"
             formControlName="phone"
-            placeholder="+33 6 12 34 56 78"
+            placeholder="+225 07 00 00 00 00"
         /></label>
       </div>
       <div class="flex justify-end gap-3 border-t border-slate-100 pt-5">
@@ -70,7 +70,7 @@ import type { Client, ClientPayload } from '../../../shared/models/client.models
           Annuler
         </button>
         <button
-          class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+          class="rounded-md bg-indigo-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:cursor-not-allowed disabled:opacity-60"
           type="submit"
           [disabled]="saving"
         >

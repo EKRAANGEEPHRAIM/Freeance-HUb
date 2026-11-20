@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { InvoiceStatus } from '@prisma/client';
 import type { Invoice } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
@@ -67,6 +67,26 @@ describe('InvoicesService', () => {
         pdfUrl: null,
       }),
     ).rejects.toBeInstanceOf(NotFoundException);
+    expect(database.invoice.create).not.toHaveBeenCalled();
+  });
+
+  it('rejects a number already used by the same user, checking only that user’s invoices', async () => {
+    database.project.findFirst.mockResolvedValue({ id: projectId });
+    database.invoice.findFirst.mockResolvedValue({ id: 'other-invoice' });
+
+    await expect(
+      service.create(userId, {
+        projectId,
+        number: invoice.number,
+        amount: invoice.amount,
+        dueDate: invoice.dueDate,
+        pdfUrl: null,
+      }),
+    ).rejects.toBeInstanceOf(ConflictException);
+    expect(database.invoice.findFirst).toHaveBeenCalledWith({
+      where: { number: invoice.number, project: { client: { userId } } },
+      select: { id: true },
+    });
     expect(database.invoice.create).not.toHaveBeenCalled();
   });
 

@@ -209,7 +209,7 @@ const PAYMENT_METHODS = {
             </p>
           </section>
 
-          <p class="mt-10 text-center text-xs text-slate-400">Facture établie avec FreelanceHub</p>
+          <p class="mt-10 text-center text-xs text-slate-400">Facture établie avec Réglo</p>
         </article>
       </div>
     }

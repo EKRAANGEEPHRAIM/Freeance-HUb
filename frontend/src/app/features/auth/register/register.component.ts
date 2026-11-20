@@ -3,34 +3,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { BrandComponent } from '../../../shared/ui/brand/brand.component';
+import { InvoiceSheetComponent } from '../../../shared/ui/invoice-sheet/invoice-sheet.component';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BrandComponent, InvoiceSheetComponent],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <main class="grid min-h-dvh lg:grid-cols-2">
       <section class="flex items-center justify-center bg-slate-50 px-5 py-12 sm:px-8">
         <div class="w-full max-w-md">
-          <a routerLink="/auth/login" class="mb-10 inline-flex items-center gap-3">
-            <span
-              class="relative grid size-10 place-items-center rounded-xl bg-indigo-700 font-display text-lg font-extrabold text-white"
-              >F<span
-                class="absolute -right-0.5 -top-0.5 size-3 rounded-full bg-violet-500 ring-2 ring-slate-50"
-              ></span
-            ></span>
-            <span class="font-display text-xl font-extrabold tracking-tight text-slate-950"
-              >FreelanceHub</span
-            >
-          </a>
+          <a routerLink="/" class="mb-14 inline-block" aria-label="Réglo, accueil"><app-brand [size]="28" /></a>
 
           <div>
-            <p class="text-sm font-semibold text-indigo-600">Première étape</p>
-            <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-              Crée ton espace freelance
+            <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Inscription · gratuite</p>
+            <h1 class="mt-4 text-4xl font-medium text-slate-950">
+              Ouvrez votre registre.
             </h1>
             <p class="mt-3 text-sm leading-6 text-slate-500">
-              Commence à organiser ton activité gratuitement, dès maintenant.
+              Quelques secondes, et votre première facture est prête.
             </p>
           </div>
 
@@ -52,7 +44,7 @@ import { AuthService } from '../../../core/services/auth.service';
                   [class.border-slate-200]="!showError('firstName')"
                   autocomplete="given-name"
                   formControlName="firstName"
-                  placeholder="Ada"
+                  placeholder="Aya"
                 />
                 @if (showError('firstName')) {
                   <span class="mt-1 block text-xs text-rose-600">Prénom requis.</span>
@@ -66,7 +58,7 @@ import { AuthService } from '../../../core/services/auth.service';
                   [class.border-slate-200]="!showError('lastName')"
                   autocomplete="family-name"
                   formControlName="lastName"
-                  placeholder="Lovelace"
+                  placeholder="Kouassi"
                 />
                 @if (showError('lastName')) {
                   <span class="mt-1 block text-xs text-rose-600">Nom requis.</span>
@@ -86,7 +78,7 @@ import { AuthService } from '../../../core/services/auth.service';
               />
               @if (showError('email')) {
                 <span class="mt-1 block text-xs text-rose-600"
-                  >Saisis une adresse e-mail valide.</span
+                  >Saisissez une adresse e-mail valide.</span
                 >
               }
             </label>
@@ -106,7 +98,7 @@ import { AuthService } from '../../../core/services/auth.service';
               }
             </label>
             <button
-              class="flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+              class="flex w-full items-center justify-center rounded-md bg-indigo-800 px-4 py-3.5 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:cursor-not-allowed disabled:opacity-60"
               type="submit"
               [disabled]="isSubmitting()"
             >
@@ -119,43 +111,20 @@ import { AuthService } from '../../../core/services/auth.service';
           </form>
           <p class="mt-7 text-center text-sm text-slate-500">
             Déjà inscrit ?
-            <a routerLink="/auth/login" class="font-semibold text-indigo-600 hover:text-indigo-700"
+            <a routerLink="/auth/login" class="font-medium text-slate-950 underline decoration-slate-400 underline-offset-4 hover:decoration-slate-950"
               >Se connecter</a
             >
           </p>
         </div>
       </section>
 
-      <section
-        class="relative hidden overflow-hidden bg-indigo-700 p-12 lg:flex lg:flex-col lg:justify-between"
-      >
-        <div class="absolute -left-24 top-10 size-96 rounded-full bg-violet-400/30 blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 size-80 rounded-full bg-indigo-950/40 blur-3xl"></div>
-        <div class="relative max-w-md">
-          <span
-            class="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-indigo-100"
-            >Conçu pour les indépendants</span
-          >
-          <h2 class="mt-7 text-5xl font-bold tracking-tight text-white">
-            Plus de clarté, moins d'administratif.
-          </h2>
-          <p class="mt-6 text-lg leading-8 text-indigo-100">
-            Un espace simple pour développer ton activité sans perdre le fil.
+      <section class="relative hidden border-l border-slate-300/70 bg-slate-100/70 px-12 py-14 lg:flex lg:flex-col lg:justify-center">
+        <div class="mx-auto w-full max-w-md">
+          <app-invoice-sheet />
+          <p class="mt-14 font-display text-2xl leading-snug text-slate-900">
+            « Une facture claire, c'est déjà <em class="text-violet-600">la moitié du paiement</em>. »
           </p>
-        </div>
-        <div class="relative grid grid-cols-3 gap-3">
-          <div class="rounded-2xl bg-white/15 p-4 text-white backdrop-blur">
-            <p class="text-2xl font-bold">Clients</p>
-            <p class="mt-2 text-sm text-indigo-100">Tous centralisés</p>
-          </div>
-          <div class="rounded-2xl bg-white/15 p-4 text-white backdrop-blur">
-            <p class="text-2xl font-bold">Projets</p>
-            <p class="mt-2 text-sm text-indigo-100">Toujours visibles</p>
-          </div>
-          <div class="rounded-2xl bg-white/15 p-4 text-white backdrop-blur">
-            <p class="text-2xl font-bold">Factures</p>
-            <p class="mt-2 text-sm text-indigo-100">À portée de main</p>
-          </div>
+          <p class="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-slate-500">Ce que vos clients recevront</p>
         </div>
       </section>
     </main>

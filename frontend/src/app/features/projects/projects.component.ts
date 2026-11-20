@@ -29,13 +29,13 @@ import type {
     <section class="space-y-7">
       <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p class="text-sm font-semibold text-indigo-600">Production</p>
-          <h2 class="mt-1 text-3xl font-bold tracking-tight text-slate-950">Projets</h2>
-          <p class="mt-2 text-slate-500">Suis l'avancement et le budget de tes missions.</p>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Production</p>
+          <h2 class="mt-3 text-4xl font-medium text-slate-950">Projets</h2>
+          <p class="mt-2 text-slate-500">Suivez l'avancement et le budget de vos missions.</p>
         </div>
         <button
           type="button"
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:cursor-not-allowed disabled:opacity-60"
           [disabled]="!clients().length"
           (click)="openCreate()"
         >
@@ -186,13 +186,13 @@ import type {
                 {{
                   query()
                     ? 'Essaie une autre recherche.'
-                    : 'Crée ton premier projet pour planifier une mission client.'
+                    : 'Créez votre premier projet pour planifier une mission client.'
                 }}
               </p>
               @if (!query() && clients().length) {
                 <button
                   type="button"
-                  class="mt-5 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white"
+                  class="mt-5 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white"
                   (click)="openCreate()"
                 >
                   Créer un projet
@@ -215,7 +215,7 @@ import type {
         <div class="relative my-8 w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <p class="text-sm font-semibold text-indigo-600">
+              <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">
                 {{ selectedProject() ? 'Modifier le projet' : 'Nouveau projet' }}
               </p>
               <h3 class="mt-1 text-2xl font-bold text-slate-950">
@@ -336,7 +336,7 @@ export class ProjectsComponent implements OnInit {
       },
       error: () => {
         this.errorMessage.set(
-          'Impossible de charger tes projets. Vérifie ta connexion puis réessaie.',
+          'Impossible de charger vos projets. Vérifiez votre connexion, puis réessayez.',
         );
         this.loading.set(false);
       },

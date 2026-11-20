@@ -108,7 +108,7 @@ import type {
           placeholder="https://exemple.com/facture.pdf"
         />
         @if (hasError('pdfUrl')) {
-          <span class="mt-1 block text-xs text-rose-600">Saisis une URL valide.</span>
+          <span class="mt-1 block text-xs text-rose-600">Saisissez une adresse web valide.</span>
         }
       </label>
       <div class="flex justify-end gap-3 border-t border-slate-100 pt-5">
@@ -119,7 +119,7 @@ import type {
         >
           Annuler</button
         ><button
-          class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:opacity-60"
+          class="rounded-md bg-indigo-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:opacity-60"
           type="submit"
           [disabled]="saving"
         >

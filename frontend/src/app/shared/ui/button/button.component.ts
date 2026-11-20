@@ -26,7 +26,7 @@ export class ButtonComponent {
 
     const variants: Record<ButtonVariant, string> = {
       primary:
-        'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20 hover:bg-indigo-700 focus-visible:ring-indigo-500',
+        'bg-indigo-800 text-white hover:bg-indigo-900 focus-visible:ring-indigo-500',
       secondary: 'bg-slate-100 text-slate-800 hover:bg-slate-200 focus-visible:ring-slate-400',
       ghost:
         'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-slate-400',

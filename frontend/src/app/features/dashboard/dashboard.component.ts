@@ -31,13 +31,13 @@ const CHART_MONTHS = 6;
     <section class="space-y-8">
       <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p class="text-sm font-semibold text-indigo-600">Vue d'ensemble</p>
-          <h2 class="mt-1 text-3xl font-bold tracking-tight text-slate-950">Tableau de bord</h2>
-          <p class="mt-2 text-slate-500">Pilote ton activité freelance au même endroit.</p>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Vue d'ensemble</p>
+          <h2 class="mt-3 text-4xl font-medium text-slate-950">Tableau de bord</h2>
+          <p class="mt-2 text-slate-500">Votre activité, encaissements et retards au même endroit.</p>
         </div>
         <a
           routerLink="/projects"
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-indigo-900"
           ><svg
             class="size-4"
             viewBox="0 0 24 24"
@@ -64,18 +64,20 @@ const CHART_MONTHS = 6;
           }
         </div>
       } @else {
-        <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <!-- Relevé : les chiffres du moment, lus comme un relevé de compte -->
+        <dl class="grid border-y border-slate-950 bg-white sm:grid-cols-2 xl:grid-cols-4">
           @for (stat of stats(); track stat.label) {
-            <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <div class="flex items-start justify-between">
-                <p class="text-sm font-medium text-slate-500">{{ stat.label }}</p>
-                <span class="size-2.5 rounded-full" [class]="stat.dot"></span>
-              </div>
-              <p class="mt-5 text-2xl font-bold tracking-tight text-slate-950">{{ stat.value }}</p>
-              <p class="mt-2 text-xs font-medium text-slate-500">{{ stat.description }}</p>
-            </article>
+            <div
+              class="border-b border-slate-200 px-5 py-6 last:border-b-0 sm:border-r sm:[&:nth-child(2n)]:border-r-0 xl:border-b-0 xl:[&:nth-child(2n)]:border-r xl:last:border-r-0"
+            >
+              <dt class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                <span class="size-1.5 rounded-full" [class]="stat.dot"></span>{{ stat.label }}
+              </dt>
+              <dd class="mt-4 font-mono text-2xl font-medium text-slate-950">{{ stat.value }}</dd>
+              <dd class="mt-1.5 text-xs text-slate-500">{{ stat.description }}</dd>
+            </div>
           }
-        </div>
+        </dl>
       }
 
       @if (!loading()) {
@@ -100,7 +102,7 @@ const CHART_MONTHS = 6;
                   }}</span>
                 }
                 <div
-                  class="w-full max-w-14 rounded-t-lg bg-indigo-600 transition-all"
+                  class="w-full max-w-14 rounded-t-sm bg-indigo-800 transition-all"
                   [style.height.%]="month.height"
                   [class.bg-slate-200]="month.total === 0"
                   [style.min-height.px]="month.total === 0 ? 4 : 8"
@@ -196,7 +198,7 @@ const CHART_MONTHS = 6;
         <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div class="flex items-center justify-between gap-4">
             <div>
-              <h3 class="font-bold text-slate-950">Configuration de ton espace</h3>
+              <h3 class="font-bold text-slate-950">Configuration de votre espace</h3>
               <p class="mt-1 text-sm text-slate-500">
                 Ajoute un client, un projet puis une facture pour démarrer.
               </p>
@@ -255,7 +257,7 @@ export class DashboardComponent implements OnInit {
         label: 'Clients',
         value: this.clients().length.toString(),
         description: 'Contacts enregistrés',
-        dot: 'bg-indigo-500',
+        dot: 'bg-indigo-700',
       },
       {
         label: 'Projets en cours',
@@ -269,13 +271,13 @@ export class DashboardComponent implements OnInit {
         description: overdue
           ? `${pending.length} factures, dont ${overdue} en retard`
           : `${pending.length} factures envoyées`,
-        dot: overdue ? 'bg-rose-500' : 'bg-amber-500',
+        dot: overdue ? 'bg-violet-500' : 'bg-slate-400',
       },
       {
         label: 'Encaissé',
         value: formatMoney(paid, 'XOF'),
         description: 'Factures payées (FCFA)',
-        dot: 'bg-emerald-500',
+        dot: 'bg-slate-950',
       },
     ];
   });

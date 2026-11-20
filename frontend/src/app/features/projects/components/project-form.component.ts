@@ -64,7 +64,7 @@ import { CURRENCY_OPTIONS, type Currency } from '../../../shared/utils/money';
         ><textarea
           class="min-h-24 w-full resize-y rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
           formControlName="description"
-          placeholder="Décris brièvement le périmètre du projet."
+          placeholder="Décrivez brièvement le périmètre du projet."
         ></textarea>
       </label>
       <div class="grid gap-4 sm:grid-cols-2">
@@ -141,7 +141,7 @@ import { CURRENCY_OPTIONS, type Currency } from '../../../shared/utils/money';
         >
           Annuler</button
         ><button
-          class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:opacity-60"
+          class="rounded-md bg-indigo-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:opacity-60"
           type="submit"
           [disabled]="saving"
         >

@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>FreelanceHub</h1>
+  <h1>Réglo</h1>
   <p><strong>Clients, projets et factures pour les freelances d'Afrique francophone</strong></p>
   <p>Factures en FCFA ou en euros, envoyées par WhatsApp, payées par Orange Money, MTN MoMo ou Wave.</p>
 
@@ -36,7 +36,7 @@
 qui facturent à la fois des clients locaux en FCFA et des clients européens en euros.
 
 Les outils de facturation européens ignorent le franc CFA, le Mobile Money et WhatsApp, qui sont
-pourtant le quotidien des freelances d'Afrique de l'Ouest. FreelanceHub part de cette réalité :
+pourtant le quotidien des freelances d'Afrique de l'Ouest. Réglo part de cette réalité :
 
 - **FCFA et euros** — chaque projet a sa devise ; les totaux sont convertis au taux fixe 1 € = 655,957 FCFA
 - **Facture prête à envoyer** — imprimable en PDF, envoyée par WhatsApp ou e-mail en un clic
@@ -59,7 +59,7 @@ Ouvrez une facture pour tester l'impression en PDF, l'envoi par WhatsApp et la r
 
 | E-mail | Mot de passe |
 | --- | --- |
-| `demo@freelancehub.app` | `Demo2026!` |
+| `demo@reglo.app` | `Demo2026!` |
 
 > L'API est hébergée sur un plan gratuit : le premier chargement peut prendre environ 30 secondes.
 
@@ -371,5 +371,5 @@ Ce projet est sous licence **MIT**.
 ---
 
 <div align="center">
-  <p>💡 <strong>FreelanceHub</strong> — Construit avec ❤️ par un freelance pour les freelances.</p>
+  <p>💡 <strong>Réglo</strong> — Construit avec ❤️ par un freelance pour les freelances.</p>
 </div>

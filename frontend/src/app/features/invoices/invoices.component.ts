@@ -31,12 +31,12 @@ import type {
     <section class="space-y-7">
       <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p class="text-sm font-semibold text-indigo-600">Finances</p>
-          <h2 class="mt-1 text-3xl font-bold tracking-tight text-slate-950">Factures</h2>
-          <p class="mt-2 text-slate-500">Suis tes paiements et échéances importantes.</p>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Finances</p>
+          <h2 class="mt-3 text-4xl font-medium text-slate-950">Factures</h2>
+          <p class="mt-2 text-slate-500">Suivez vos paiements et vos échéances.</p>
         </div>
         <button
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:opacity-60"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:opacity-60"
           type="button"
           [disabled]="!projects().length"
           (click)="openCreate()"
@@ -228,12 +228,12 @@ import type {
                 {{
                   query()
                     ? 'Essaie une autre recherche.'
-                    : 'Crée ta première facture pour suivre tes paiements.'
+                    : 'Créez votre première facture pour suivre vos paiements.'
                 }}
               </p>
               @if (!query() && projects().length) {
                 <button
-                  class="mt-5 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white"
+                  class="mt-5 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white"
                   type="button"
                   (click)="openCreate()"
                 >
@@ -256,7 +256,7 @@ import type {
         <div class="relative my-8 w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <p class="text-sm font-semibold text-indigo-600">
+              <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">
                 {{ selectedInvoice() ? 'Modifier la facture' : 'Nouvelle facture' }}
               </p>
               <h3 class="mt-1 text-2xl font-bold text-slate-950">
@@ -370,7 +370,7 @@ export class InvoicesComponent implements OnInit {
       },
       error: () => {
         this.errorMessage.set(
-          'Impossible de charger tes factures. Vérifie ta connexion puis réessaie.',
+          'Impossible de charger vos factures. Vérifiez votre connexion, puis réessayez.',
         );
         this.loading.set(false);
       },

@@ -20,14 +20,14 @@ import type { Note, NotePayload } from '../../shared/models/note.models';
     <section class="space-y-7">
       <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p class="text-sm font-semibold text-indigo-600">Organisation</p>
-          <h2 class="mt-1 text-3xl font-bold tracking-tight text-slate-950">Notes</h2>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">Organisation</p>
+          <h2 class="mt-3 text-4xl font-medium text-slate-950">Notes</h2>
           <p class="mt-2 text-slate-500">
-            Capture tes idées et garde tes informations importantes à portée de main.
+            Vos idées et informations importantes, à portée de main.
           </p>
         </div>
         <button
-          class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-indigo-900"
           type="button"
           (click)="openCreate()"
         >
@@ -158,12 +158,12 @@ import type { Note, NotePayload } from '../../shared/models/note.models';
                 {{
                   query()
                     ? 'Essaie une autre recherche.'
-                    : 'Crée une note pour conserver tes idées et informations importantes.'
+                    : 'Créez une note pour garder vos idées et informations importantes.'
                 }}
               </p>
               @if (!query()) {
                 <button
-                  class="mt-5 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white"
+                  class="mt-5 rounded-md bg-indigo-800 px-4 py-3 text-sm font-medium text-white"
                   type="button"
                   (click)="openCreate()"
                 >
@@ -186,7 +186,7 @@ import type { Note, NotePayload } from '../../shared/models/note.models';
         <div class="relative my-8 w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl sm:p-7">
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <p class="text-sm font-semibold text-indigo-600">
+              <p class="font-mono text-xs uppercase tracking-[0.22em] text-slate-500">
                 {{ selectedNote() ? 'Modifier la note' : 'Nouvelle note' }}
               </p>
               <h3 class="mt-1 text-2xl font-bold text-slate-950">
@@ -291,7 +291,7 @@ export class NotesComponent implements OnInit {
       },
       error: () => {
         this.errorMessage.set(
-          'Impossible de charger tes notes. Vérifie ta connexion puis réessaie.',
+          'Impossible de charger vos notes. Vérifiez votre connexion, puis réessayez.',
         );
         this.loading.set(false);
       },

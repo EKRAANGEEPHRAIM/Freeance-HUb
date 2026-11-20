@@ -35,7 +35,7 @@ import type { Note, NotePayload } from '../../../shared/models/note.models';
           [class.border-rose-400]="hasError('content')"
           [class.border-slate-200]="!hasError('content')"
           formControlName="content"
-          placeholder="Écris ta note ici..."
+          placeholder="Votre note…"
         ></textarea>
         @if (hasError('content')) {
           <span class="mt-1 block text-xs text-rose-600">Le contenu est requis.</span>
@@ -49,7 +49,7 @@ import type { Note, NotePayload } from '../../../shared/models/note.models';
         >
           Annuler</button
         ><button
-          class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:opacity-60"
+          class="rounded-md bg-indigo-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-900 disabled:opacity-60"
           type="submit"
           [disabled]="saving"
         >
