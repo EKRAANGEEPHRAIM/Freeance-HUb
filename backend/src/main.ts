@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
@@ -17,7 +17,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: configService.getOrThrow<string>('FRONTEND_URL'),
+    // trim + sans "/" final : un espace ou retour à la ligne collé dans Render
+    // rendrait l'en-tête CORS invalide et ferait échouer toutes les requêtes
+    origin: configService.getOrThrow<string>('FRONTEND_URL').trim().replace(/\/+$/, ''),
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Authorization', 'Content-Type'],
@@ -26,7 +28,8 @@ async function bootstrap() {
   // Limitation de la taille du payload
   app.useBodyParser('json', { limit: '1mb' });
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  // Validation : ZodValidationPipe sur chaque route. Pas de ValidationPipe global,
+  // qui exigerait class-validator (absent du projet) et ferait planter le démarrage.
   app.useGlobalFilters(new PrismaExceptionFilter());
 
   app.enableShutdownHooks();
