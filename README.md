@@ -51,7 +51,7 @@ NgRx Signals) et **Tailwind CSS 4**.
 
 ## 🎯 Essayer la démo
 
-**Application :** _lien à ajouter après déploiement_
+**Application :** https://freeance-h-ub.vercel.app
 
 Sur la page d'accueil, cliquez sur **« Essayer la démo »** : vous arrivez dans un espace déjà
 rempli (3 clients, 5 projets en FCFA et en euros, 7 factures dont une en retard, 3 notes).
